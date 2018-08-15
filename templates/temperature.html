@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Current Temperature</title>
+		<link rel="stylesheet" href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css">
+		<link rel="icon" href="https://openweathermap.org/current/themes/openweathermap/assets/vendor/owm/img/icons/favicon.ico" />
+		<style>
+			.container {
+				background-color: #D3D3D3;
+				margin: 10px;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+			#top {
+				margin: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="top">
+			<h1>Weather Across the World</h1>
+			<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search..">
+			&nbsp&nbspLast Updated: {{time}} <br><br>
+		</div>
+
+		{% for i,city in enumerate(cityInfo) %}
+		<div class="container">
+			<b>{{i+1}}. {{city["name"]}}</b><br>
+			The forecast is: {{city["weather"][0]["main"]}}, specifically {{city["weather"][0]["description"]}}...<br>
+			as of: {{city['dt']}}.<br>
+		</div>
+		{% endfor %}
+
+		<script>setTimeout(function(){
+   			window.location.reload(1);
+			}, 60000);
+		</script>
+		<script>
+			function myFunction() {
+  			  // Declare variables
+    			var input, filter, li, i;
+    			input = document.getElementById('myInput');
+    			filter = input.value.toUpperCase();
+    			li = document.getElementsByClassName('container');
+
+			    // Loop through all list items, and hide those who don't match the search query
+    			for (i = 0; i < li.length; i++) {
+        			if (li[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
+            			li[i].style.display = "";
+       				} else {
+            			li[i].style.display = "none";
+        			}
+    			}
+			}
+		</script>
+	</body>
+</html>
